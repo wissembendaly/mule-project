@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: My-API
+version: v1
+baseUri: http://localhost:8081/api
+/day:
+  /{weekday}/{day}/{month}/{year}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              properties:
+                date: string
