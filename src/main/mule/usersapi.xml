@@ -25,9 +25,27 @@
         <choice doc:name="Choice" doc:id="a2610761-6368-4def-890d-43abce6e6652" >
 			<when expression="always">
 				<http:request method="GET" doc:name="monthOfYear" doc:id="1ae776fb-9d01-4002-8019-e5c1091bb793" config-ref="HTTP_Request_configuration" path="/api/monthOfYear/++'payload.month'"/>
+				<ee:transform doc:name="Transform Message" doc:id="964b48a6-01ae-4cf8-8323-d9efc395586a" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
 			</when>
 			<otherwise >
 				<http:request method="PATCH" doc:name="dayOfWeek" doc:id="557aa8b7-ba32-44d4-8d2f-22533fc70246" config-ref="HTTP_Request_configuration1" path="/api/dayOfWeek/++'payload.weekday'"/>
+				<ee:transform doc:name="Transform Message" doc:id="e6571448-0cd8-4dc1-b6b3-dde9cd404c3e" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
 			</otherwise>
 		</choice>
 		<ee:transform doc:name="Transform Message" doc:id="8cc7d8e1-db78-429b-b4dc-19ddd50dcc4c">
@@ -39,6 +57,7 @@ output application/json
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="ae4abc54-70ea-4ce3-9b7c-45ebe07e61d8" />
 		<error-handler>
             <on-error-propagate type="APIKIT:BAD_REQUEST">
                 <ee:transform>
